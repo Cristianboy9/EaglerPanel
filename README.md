@@ -1,22 +1,32 @@
-<h1 align="center">EaglerPanel</h1>
-<p align="center"><i>Please credit me for this.</i></p>
-<br>
-<p align="center"><i>And subscribe to IsmaelTech <a href="https://www.youtube.com/channel/UCwSd8pbURlMBAIxqq8EaELw?sub_confirmation=1">Fr</a></i></p>
-<br>
-<h1 align="center">The panel works with console, minecraft 1.17.1, waterfall 1.20 #562</h1>
-<p align="center"><i>Maybe soon a ngrok or cloudflare tunnels.</i></p>
-<br>
-<h1> Renember to use this commands!!! </h1>
-<p>chmod +x install.sh</p>
-<p>./install.sh</p>
-<p>sdk install java 17.0.9-amzn</p>
-<p>write "y", without ", and MAKE SURE TO WRITE y</p>
-<p>enter, and wait it to finish and do the folowing commands</p>
-<p>chmod +x paper.sh</p>
-<p>./paper.sh</p>
-<p>Create another tab and chmod +x waterfall.sh</p>
-<p>./waterfall.sh</p>
-<br>
-<h2> Renember to use chmod +x name.sh </h2>
-<h2> Change the "name.sh" according to the files ^ above </h2>
-<p>To start the script</p>
+# EaglerPanel
+
+This setup runs a Purpur 1.17.1 game server behind a Waterfall 1.20 proxy. It
+expects Debian or Ubuntu and installs Java 17 with `apt-get`; the installer does
+not upgrade or remove unrelated system packages. It uses the project's existing
+Waterfall build 562; PaperMC marks Waterfall unsupported and archived.
+
+## Install and run
+
+From the project directory, run:
+
+```sh
+./install.sh
+./paper.sh
+```
+
+Keep the game server running. In a second terminal, start the proxy:
+
+```sh
+./waterfall.sh
+```
+
+The proxy listens on port `25577` by default (see `waterfall/config.yml`). Open
+that port in your firewall and connect players to it. The Paper server listens
+on loopback at `127.0.0.1:25565` and is configured as the proxy's lobby; keep
+that backend port private because it uses offline-mode behind the proxy.
+
+Run the scripts from any working directory; they resolve files relative to
+their own location. `paper.sh` defaults to an 8 GB heap and `waterfall.sh` to
+4 GB. Override those defaults if needed, for example
+`PAPER_MEMORY=4G ./paper.sh` and `WATERFALL_MEMORY=1G ./waterfall.sh`. The proxy
+restarts after an unexpected failure; a clean exit or Ctrl+C stops it.
